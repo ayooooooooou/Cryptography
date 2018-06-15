@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+body{
+    margin-top: 50px;
+}
+
+.container{
+    width:600px;
+    height:400px;
+    margin-left:50px;
+}
+
+ .row{
+ 	margin-bottom: 20px;
+ }
+
+ #key-input{
+     width:50px;
+ }
+
+ #file1{
+     float:right;
+ }
+
+#m{
+    margin-bottom: 10px;
+}
+
+ #mm{
+     margin-top:10px;
+     margin-bottom: 10px;
+ }

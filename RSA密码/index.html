@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes"
+    />
+    <script language="JavaScript" type="text/javascript" src="cryptico.browser.js"></script>
+    <title>RSA加密和解密</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        if (typeof FileReader == 'undefined') {
+            var div = document.getElementById("dd");
+            div.innerHTML = '你的浏览器不支持FileReader接口！';
+            document.getElementById("file").setAttribute("disabled", "disabled");
+            document.getElementById("filea").setAttribute("disabled", "disabled");
+            document.getElementById("fileb").setAttribute("disabled", "disabled");
+        }
+
+
+        function textShow(fileElementId, textElementId) {
+            var file = document.getElementById(fileElementId).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var conb = document.getElementById(textElementId);
+                    conb.innerHTML = e.target.result;
+                }
+            }
+            reader.readAsText(file);
+        }
+
+
+        function rsaEncrypt(keyForPrivate, privateKeyString, publicKeyString, plainText) {
+            var rsaKey = cryptico.privateKeyFromString(privateKeyString, keyForPrivate);
+            var EncryptionResult = cryptico.encrypt(plainText, publicKeyString, rsaKey);
+            return EncryptionResult.cipher;
+        }
+
+        function rsaDecrypt(keyForPrivate, privateKeyString, cipherText) {
+            var rsaKey = cryptico.privateKeyFromString(privateKeyString, keyForPrivate);
+            var DecryptionResult = cryptico.decrypt(cipherText, rsaKey);
+            return DecryptionResult;
+        }
+
+
+
+        function showE() {
+            var publicKey = document.getElementById("publicKey").value;
+            var plainText = escape(document.getElementById("textIn").value);
+            var keyForPrivate = document.getElementById("keyForPrivate").value;
+            var privateKey = document.getElementById("privateKey").value;
+
+            var aesKey = cryptico.string2bytes(cryptico.b64to256(
+                "L7UotmZPW5e1DFI3xEN1Y2jfLatPhtNNRNL2Zb/TyUE="));
+            aesKey = cryptico.string2bytes(cryptico.b64to256(
+                cryptico.encryptAESECB(escape(keyForPrivate), aesKey)));
+            aesKey = aesKey.slice(0, 16);
+            var mi = rsaEncrypt(aesKey, privateKey, publicKey, plainText);
+
+            document.getElementById("textOut").value = mi;
+            var myDiv = document.getElementById("msg");
+            myDiv.innerText = "你的ID：" + cryptico.publicKeyID(publicKey);
+        }
+
+        function showD() {
+            var keyForPrivate = document.getElementById("keyForPrivate").value;
+            var privateKey = document.getElementById("privateKey").value;
+            var cipherText = document.getElementById("textIn").value;
+
+            var aesKey = cryptico.string2bytes(cryptico.b64to256(
+                "L7UotmZPW5e1DFI3xEN1Y2jfLatPhtNNRNL2Zb/TyUE="));
+            aesKey = cryptico.string2bytes(cryptico.b64to256(
+                cryptico.encryptAESECB(escape(keyForPrivate), aesKey)));
+            aesKey = aesKey.slice(0, 16);
+            var result = rsaDecrypt(aesKey, privateKey, cipherText);
+
+            document.getElementById("textOut").value = unescape(result.plaintext);
+            var myDiv = document.getElementById("msg");
+            myDiv.innerText = "对方的ID：" + cryptico.publicKeyID(result.publicKeyString) +
+                "\n\n数字签名(verified代表签名正确,forged代表签名错误)：" + result.signature +
+                "\n\n\n对方的公钥：\n" + result.publicKeyString;
+        }
+    </script>
+    <div id="dd"> </div>
+    <p>在下方输入你创建密钥时设置的密码：
+        <br/>
+        <input type="password" name="keyForPrivate" id="keyForPrivate">
+        </>
+        <p>点击下方按钮选择 对方的 公钥文件：
+            <br/>
+            <input type="file" style='font-size:20px' name="filePublicKey" id='filePublicKey' onchange='textShow("filePublicKey","publicKey")'
+            />
+        </p>
+        <textarea name="publicKey" rows="5" cols="30" id="publicKey"></textarea>
+        <p>点击下方按钮选择 你的 私钥文件：
+            <br/>
+            <input type="file" style='font-size:20px' name="filePrivateKey" id='filePrivateKey' onchange='textShow("filePrivateKey","privateKey")'
+            />
+        </p>
+        <textarea name="privateKey" rows="5" cols="30" id="privateKey"></textarea>
+        <p>在下框输入要加密或者要解密的内容：
+            <br/>
+            <textarea name="textIn" rows="5" cols="30" id="textIn"></textarea>
+            </>
+            <p>
+                <button style='font-size:20px' onclick="showE()">点我进行加密</button>
+                <button style='font-size:20px' onclick="showD()">点我进行解密</button>
+                </>
+                <p>下框将会输出加密或者解密后的内容：
+                    <br/>
+                    <textarea name="textOut" rows="5" cols="30" id="textOut"></textarea>
+                    </>
+                    <p>加密的时候需要对方的公钥以及自己的私钥
+                        <br/> 只是解密的话有自己的私钥就可以了
+                    </p>
+                    <p id="msg"></p>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+#con {
+    width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.pb20 {
+    margin-bottom: 20px;
+}
+
+#title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#keyInput {
+    width:100px;
+}
+
+textarea {
+    width: 400px;
+    height: 100px;
+}

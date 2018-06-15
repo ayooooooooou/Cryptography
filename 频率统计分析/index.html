@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>频率统计分析</title>
+</head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+
+<body>
+    <div class="container">
+        <div>
+            <textarea rows="6" cols="50" type="text" name="m" id="m" placeholder="Ciphertext"></textarea>
+        </div>
+        <input type="file" onchange="jsReadFiles(this.files)">
+        <button style="margin-left:22px;" type="button" class="analyse btn btn-warning btn-sm">分析</button>
+        <div class="show-array col-md-4"></div>
+        <div>
+            <input style="width:100px; height:30px" type="text" id="input-replaceleft">
+            <button style="text-align:center;margin:0px 15px 5px 15px;" class="btn btn-info btn-sm" id="btn-replace">Replace</button>
+            <input style="width:100px; height:30px" type="text" id="input-replaceright">
+            <button style="text-align:center;margin:0px 6px 5px 11px;" type="button" class="copy2 btn btn-danger btn-sm">copy</button>
+        </div>
+        <div>
+            <textarea style="margin-top:10px;" rows="6" cols="50" type="text" name="m" id="mm" placeholder="Plaintext"></textarea>
+        </div>
+        <a target="_blank" href="https://www.cnblogs.com/geneleo/articles/2853996.html">English Letter Frequency Counts</a>
+    </div>
+    <img style="float:right;margin:-460px 0px 0px 0px;" src="字母频率.png" alt="">
+</body>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
+<script src="index.js"></script>
+
+</html>
