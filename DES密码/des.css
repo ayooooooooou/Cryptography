@@ -21,3 +21,9 @@ textarea {
     width: 400px;
     height: 100px;
 }
+
+.txt{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size:2em;
+    font-weight:bold;
+}
