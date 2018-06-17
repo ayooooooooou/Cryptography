@@ -49,7 +49,7 @@ function decrypt(str, key) {
 
 
 $('.key-create').click(function () {
-    key = Math.round(Math.random() * 10) + 1;
+    key = Math.round(Math.random() * 100) + 1;
 
     $('#key-input:text').val(key);
 
